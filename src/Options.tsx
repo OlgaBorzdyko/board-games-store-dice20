@@ -18,7 +18,8 @@ const OptionsWrapper = styled.div`
   height: 100px;
 `
 
-const SideText = styled.div`
+const SideText = styled.button`
+  all: unset;
   position: relative;
   text-align: ${({ align }) => align};
   font-size: 90px;
