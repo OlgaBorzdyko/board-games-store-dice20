@@ -69,7 +69,12 @@ const Dice = () => {
     <>
       <div
         ref={mountRef}
-        style={{ width: '100%', height: '100%', position: 'relative', top: '20%' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'relative',
+          top: '20%'
+        }}
       ></div>
       <Options
         onLeftClick={handleRollDice}
