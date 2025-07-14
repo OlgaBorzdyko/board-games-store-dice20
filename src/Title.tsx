@@ -16,6 +16,7 @@ const TitleWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
+    top: 10%;
 `
 
 const TitleText = styled.h1`

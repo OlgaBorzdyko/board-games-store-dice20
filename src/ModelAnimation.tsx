@@ -33,6 +33,7 @@ export default ModelAnimation
 
 const ModelImage = styled.img`
   position: absolute;
+  top: 3%;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
