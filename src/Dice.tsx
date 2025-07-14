@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 import Options from './Options'
@@ -6,7 +6,16 @@ import Options from './Options'
 const Dice = () => {
   const mountRef = useRef<HTMLDivElement>(null)
   const d20Ref = useRef<THREE.Mesh | null>(null)
-  const [rotationEnabled, setRotationEnabled] = useState(false)
+  const animationPhase = useRef<'none' | 'lift' | 'drop' | 'bounce' | 'rotate'>(
+    'none'
+  )
+  const liftProgress = useRef<number>(0)
+  const drop = useRef<number>(0)
+  const bounce = useRef<number>(0)
+  const bounceCount = useRef<number>(0)
+  const liftTo = 1
+  const fps = 60
+  const maxBounces = 5
 
   useEffect(() => {
     const width = window.innerWidth
@@ -43,9 +52,53 @@ const Dice = () => {
 
     const animate = () => {
       requestAnimationFrame(animate)
-      if (rotationEnabled && d20Ref.current) {
-        d20Ref.current.rotation.x += 0.05
-        d20Ref.current.rotation.y += 0.05
+      if (d20Ref.current) {
+        switch (animationPhase.current) {
+          case 'lift': {
+            const yWay = liftTo / fps
+            d20Ref.current.position.y += yWay
+            liftProgress.current++
+            if (liftProgress.current >= fps) {
+              drop.current = 0
+              animationPhase.current = 'drop'
+            }
+            break
+          }
+          case 'drop': {
+            drop.current += 0.05
+            d20Ref.current.position.y -= drop.current
+            if (d20Ref.current.position.y <= 0) {
+              d20Ref.current.position.y = 0
+              bounce.current = drop.current * 0.1
+              animationPhase.current = 'bounce'
+              drop.current = 0
+            }
+            break
+          }
+          case 'bounce': {
+            bounce.current -= 0.02
+            d20Ref.current.position.y += bounce.current
+            if (d20Ref.current.position.y <= 0) {
+              bounceCount.current++
+              console.log(bounceCount)
+              if (bounceCount.current >= maxBounces) {
+                d20Ref.current.position.y = 0
+                animationPhase.current = 'rotate'
+              } else {
+                bounce.current = 0.5 / bounceCount.current
+              }
+            }
+            break
+          }
+          case 'rotate': {
+            d20Ref.current.rotation.x += 0.05
+            d20Ref.current.rotation.y += 0.05
+            break
+          }
+          case 'none':
+          default:
+            break
+        }
       }
       renderer.render(scene, camera)
     }
@@ -55,14 +108,15 @@ const Dice = () => {
     return () => {
       mountRef.current?.removeChild(renderer.domElement)
     }
-  }, [rotationEnabled])
+  }, [])
 
   const handleRollDice = () => {
-    setRotationEnabled(true)
-
-    setTimeout(() => {
-      setRotationEnabled(false)
-    }, 2000)
+    console.log(255)
+    liftProgress.current = 0
+    drop.current = 0
+    bounce.current = 0
+    bounceCount.current = 0
+    animationPhase.current = 'lift'
   }
 
   return (
