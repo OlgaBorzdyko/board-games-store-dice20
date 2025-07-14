@@ -6,9 +6,9 @@ import Options from './Options'
 const Dice = () => {
   const mountRef = useRef<HTMLDivElement>(null)
   const d20Ref = useRef<THREE.Mesh | null>(null)
-  const animationPhase = useRef<'none' | 'lift' | 'drop' | 'bounce' | 'rotate'>(
-    'none'
-  )
+  const animationPhase = useRef<
+    'levitate' | 'lift' | 'drop' | 'bounce' | 'rotate'
+  >('levitate')
   const liftProgress = useRef<number>(0)
   const drop = useRef<number>(0)
   const bounce = useRef<number>(0)
@@ -95,9 +95,11 @@ const Dice = () => {
             d20Ref.current.rotation.y += 0.05
             break
           }
-          case 'none':
-          default:
+          case 'levitate': {
+            const t = performance.now() / 500
+            d20Ref.current.position.y = 0.2 + Math.sin(t) * 0.1
             break
+          }
         }
       }
       renderer.render(scene, camera)
@@ -111,7 +113,6 @@ const Dice = () => {
   }, [])
 
   const handleRollDice = () => {
-    console.log(255)
     liftProgress.current = 0
     drop.current = 0
     bounce.current = 0
