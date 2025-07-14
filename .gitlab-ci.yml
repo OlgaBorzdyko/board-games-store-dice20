@@ -1,0 +1,14 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  when: on_success
+  script:
+    - make build
+
+deploy:
+  stage: deploy
+  script:
+    - make deploy
