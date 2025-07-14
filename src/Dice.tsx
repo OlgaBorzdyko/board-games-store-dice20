@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
+import Options from './Options'
+
 const Dice = () => {
   const mountRef = useRef<HTMLDivElement>(null)
   const d20Ref = useRef<THREE.Mesh | null>(null)
@@ -64,22 +66,16 @@ const Dice = () => {
   }
 
   return (
-    <div
-      ref={mountRef}
-      style={{ width: '100%', height: '100%', position: 'relative' }}
-    >
-      <button
-        onClick={handleRollDice}
-        style={{
-          position: 'absolute',
-          top: 10,
-          left: 10,
-          zIndex: 10
-        }}
-      >
-        Клик
-      </button>
-    </div>
+    <>
+      <div
+        ref={mountRef}
+        style={{ width: '100%', height: '100%', position: 'relative' }}
+      ></div>
+      <Options
+        onLeftClick={handleRollDice}
+        onRightClick={handleRollDice}
+      ></Options>
+    </>
   )
 }
 

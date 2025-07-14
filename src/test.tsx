@@ -2,14 +2,12 @@ import styled from 'styled-components'
 
 import Dice from './Dice'
 import ModelAnimation from './ModelAnimation'
-import Options from './Options'
 import Title from './Title'
 
 const Test = () => {
   return (
     <ModelWrapper>
       <ModelAnimation />
-      <Options />
       <DiceWrapper>
         <Dice />
       </DiceWrapper>
