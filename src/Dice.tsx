@@ -31,7 +31,7 @@ const Dice = () => {
     mountRef.current?.appendChild(renderer.domElement)
 
     const textureLoader = new THREE.TextureLoader()
-    const diceTexture = textureLoader.load('src/dice-texture.png')
+    const diceTexture = textureLoader.load('dice-texture.png')
 
     const geometry = new THREE.IcosahedronGeometry(1, 0)
     const material = new THREE.MeshPhysicalMaterial({
@@ -108,6 +108,7 @@ const Dice = () => {
     animate()
 
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       mountRef.current?.removeChild(renderer.domElement)
     }
   }, [])

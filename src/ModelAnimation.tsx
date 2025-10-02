@@ -21,11 +21,7 @@ const ModelAnimation = () => {
   }, [])
 
   return (
-    <ModelImage
-      alt="model-animation"
-      ref={modelRef}
-      src="src/dice-bg-model.png"
-    />
+    <ModelImage alt="model-animation" ref={modelRef} src="dice-bg-model.png" />
   )
 }
 

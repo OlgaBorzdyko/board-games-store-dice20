@@ -1,6 +1,12 @@
 import styled from 'styled-components'
 
-const Options = ({ onLeftClick, onRightClick }) => {
+const Options = ({
+  onLeftClick,
+  onRightClick
+}: {
+  onLeftClick: () => void
+  onRightClick: () => void
+}) => {
   return (
     <OptionsWrapper>
       <SideText align="left" onClick={onLeftClick}>
